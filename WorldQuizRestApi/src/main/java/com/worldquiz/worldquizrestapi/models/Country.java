@@ -4,14 +4,14 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "country", schema = "world")
+@Table(name = "country")
 public class Country {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "Code")
     private String code;
     @Basic
-    @Column(name = "Name")
+    @Column(name = "name")
     private String name;
     @Basic
     @Column(name = "Continent")

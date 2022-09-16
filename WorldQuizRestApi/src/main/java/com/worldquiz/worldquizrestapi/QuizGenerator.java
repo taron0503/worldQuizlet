@@ -22,7 +22,7 @@ public class QuizGenerator {
         ArrayList<String> options = new ArrayList<>();
         switch (quizType){
             case CapitalByCoutry:
-                Object country = countryDao.findByName("POLand");
+                Object country = countryDao.findAllByName("Poland");
 //                question = "Which city is capital of " + country.getName() + "?";
                // options = cityDao.findAllByCoutryCode("").stream().map(city->city.getName()).toArray();
                 break;
