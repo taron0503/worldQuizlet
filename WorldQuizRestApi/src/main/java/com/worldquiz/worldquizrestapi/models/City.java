@@ -23,6 +23,9 @@ public class City {
     @Column(name = "Population")
     private int population;
 
+    @OneToOne(mappedBy = "capital")
+    private Country country;
+
     public int getId() {
         return id;
     }
@@ -61,6 +64,14 @@ public class City {
 
     public void setPopulation(int population) {
         this.population = population;
+    }
+
+    public Country getCountry() {
+        return country;
+    }
+
+    public void setCountry(Country country) {
+        this.country = country;
     }
 
     @Override

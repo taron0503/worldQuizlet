@@ -1,5 +1,7 @@
 package com.worldquiz.worldquizrestapi.models;
 
+import org.apache.tomcat.jni.Address;
+
 import javax.persistence.*;
 import java.util.Objects;
 
@@ -46,9 +48,10 @@ public class Country {
     @Basic
     @Column(name = "HeadOfState")
     private String headOfState;
-    @Basic
-    @Column(name = "Capital")
-    private Integer capital;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "Capital", referencedColumnName = "ID")
+    private City capital;
     @Basic
     @Column(name = "Code2")
     private String code2;
@@ -157,11 +160,11 @@ public class Country {
         this.headOfState = headOfState;
     }
 
-    public Integer getCapital() {
+    public City getCapital() {
         return capital;
     }
 
-    public void setCapital(Integer capital) {
+    public void setCapital(City capital) {
         this.capital = capital;
     }
 

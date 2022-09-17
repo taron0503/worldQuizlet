@@ -1,4 +1,4 @@
-package com.worldquiz.worldquizrestapi;
+package com.worldquiz.worldquizrestapi.repositories;
 
 import com.worldquiz.worldquizrestapi.models.City;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -6,5 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface CityRepository extends JpaRepository<City, String> {
-//    List<City> findAllByCoutryCode(String coutryCode);
+    City findById(Integer id);
+
+    City findOneByName(String countryName);
 }
