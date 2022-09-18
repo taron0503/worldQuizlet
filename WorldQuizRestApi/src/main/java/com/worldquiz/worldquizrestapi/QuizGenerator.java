@@ -21,6 +21,15 @@ public class QuizGenerator {
 
     List<String> countryCodeList;
 
+    public List<Quiz> getQuizzes(int count){
+        List<Quiz> quizzes = new ArrayList<>();
+        for (int i = 0; i<count;i++){
+            Quiz quiz = generateQuiz(QuizType.CapitalByCoutry);
+            quizzes.add(quiz);
+        }
+        return quizzes;
+    }
+
     public Quiz generateQuiz(QuizType quizType){
         Quiz quiz=null;
         String question = "";

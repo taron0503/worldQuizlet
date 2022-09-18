@@ -5,6 +5,7 @@ import com.worldquiz.worldquizrestapi.QuizGenerator;
 import com.worldquiz.worldquizrestapi.QuizManager;
 import com.worldquiz.worldquizrestapi.QuizType;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,6 +17,7 @@ import java.util.List;
 
 
 @RestController
+@CrossOrigin
 public class HomeController {
     @Autowired
     QuizGenerator quizGenerator;
@@ -24,9 +26,10 @@ public class HomeController {
     QuizManager quizManager;
 
     @PostMapping("/getQuestion")
-    public Quiz getQuestion(){
-        Quiz quiz = quizGenerator.generateQuiz(QuizType.CoutryByCapital);
-        return quiz;
+
+    public List<Quiz> getQuestion(){
+//        return quizGenerator.generateQuiz(QuizType.CoutryByCapital);
+        return quizGenerator.getQuizzes(4);
     }
 
     @PostMapping("/checkAnswers")

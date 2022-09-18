@@ -27,3 +27,7 @@
 .answerItem:hover{
     cursor: pointer;
 }
+
+.is-selected{
+    background-color: coral;
+}
