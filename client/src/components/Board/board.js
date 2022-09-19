@@ -27,22 +27,28 @@ export default class Board extends Component{
         })
     }
 
-    onSelect(option){
-        console.log(this)
-        // let quizzes = [...this.state.quizzes]
-        // quizzes[this.state.currentQuiz].answer=option;
-        // console.log(option)
-        // this.setState({quizzes:quizzes});
+    onSelect = option=>{
+        let quizzes = [...this.state.quizzes]
+        if(quizzes[this.state.currentQuiz].answer)
+            quizzes[this.state.currentQuiz].answer=null;
+        else
+            quizzes[this.state.currentQuiz].answer=option;
+        this.setState({quizzes:quizzes});
     }
 
     render(){
-        console.log(this.state)
-        return <div className="Board">
+        let quizzes = this.state.quizzes;
+        let quiz;
+        if(quizzes)
+           quiz = quizzes[this.state.currentQuiz]
+        return (quizzes && <div className="Board">
             <header className="Board-header">
                 WorldQuizlet
-                {this.state.quizzes  && <QuizCard quiz={this.state.quizzes[this.state.currentQuiz]} onSelect={this.onSelect}/>}
+                <QuizCard quiz={quiz} onSelect={this.onSelect}/>
             </header>
-            <button type="button" className="btn btn-success btn-lg disabled" onClick={()=>this.nextQuestion()}>Next</button>
-        </div>
+            <button type="button" 
+                    className={"btn btn-success btn-lg "+(!quiz.answer && " disabled")}
+                    onClick={()=>this.nextQuestion()}>Next</button>
+        </div>)
     }
 }
