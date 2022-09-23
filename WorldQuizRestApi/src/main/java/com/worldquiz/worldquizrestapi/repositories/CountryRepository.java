@@ -11,6 +11,8 @@ public interface CountryRepository extends JpaRepository<Country, Integer> {
 
     Country findOneByName(String name);
 
-    @Query(value = "select code from country", nativeQuery = true)
+    Country findByCode(String code);
+
+    @Query(value = "select code from country where capital is not null", nativeQuery = true)
     List<String> findAllCodes();
 }

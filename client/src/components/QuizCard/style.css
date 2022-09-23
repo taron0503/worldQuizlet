@@ -1,5 +1,11 @@
+.quizCard{
+    color: white;
+    font-size: 4.5vh;
+    margin: 6vh 0vh 6vh;
+}
+
 .questionHeader{
-    border:1px solid white;
+    border:2px solid white;
     border-radius: 15px;
     display: inline-block;
     padding: 1vh;
@@ -8,10 +14,13 @@
 }
 
 .answers{
-    border: 1px solid green;
+    border-top: 1px solid lavender;
+    border-bottom: 1px solid lavender;
+    border-radius: 10px;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    margin: 10px;
 }
 
 .answerItem{
@@ -29,5 +38,13 @@
 }
 
 .is-selected{
-    background-color: coral;
+    background-color: rgb(221, 166, 28);
+}
+
+.correct{
+    background-color: green;
+}
+
+.notcorrect{
+    background-color: red;
 }

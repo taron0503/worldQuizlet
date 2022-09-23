@@ -38,7 +38,7 @@ public class QuizGenerator {
         switch (quizType){
             case CapitalByCoutry:
                 Country country = getRandomCountry();
-                question = "Which city is capital of " + country.getName() + "?";
+                question = "What is the Capital of " + country.getName() + "?";
                 options = getOptions(quizType);
                 options.add(country.getCapital().getName());
                 break;
@@ -78,7 +78,8 @@ public class QuizGenerator {
 
     Country getRandomCountry(){
         int rand = (int) ((Math.random() * countryCodeList.size()) );
-        return countryDao.findOneByCode(countryCodeList.get(rand));
+        Country country = countryDao.findByCode(countryCodeList.get(rand));
+        return country;
     }
 
     City getRandomCapital(){
