@@ -39,13 +39,13 @@ public class QuizGenerator {
             case CapitalByCoutry:
                 Country country = getRandomCountry();
                 question = "What is the Capital of " + country.getName() + "?";
-                options = getOptions(quizType);
+                options = getOptions(quizType,country);
                 options.add(country.getCapital().getName());
                 break;
             case  CoutryByCapital:
                 City capital = getRandomCapital();
                 question = "Which country's capital is " + capital.getName() + "?";
-                options = getOptions(quizType);
+                options = getOptions(quizType,capital.getCountry());
                 options.add(capital.getCountry().getName());
                 break;
         }
@@ -54,19 +54,25 @@ public class QuizGenerator {
         return quiz;
     }
 
-    List<String> getOptions(QuizType quizType){
+    List<String> getOptions(QuizType quizType, Country except){
         List<String> options = new ArrayList<>();
         int rand;
         switch (quizType){
             case CapitalByCoutry:
                 for(int i = 0;i<3;i++){
                     rand = (int) ((Math.random() * countryCodeList.size()) );
+                    while(countryCodeList.get(rand).equals(except.getCode())){
+                        rand = (int) ((Math.random() * countryCodeList.size()) );
+                    }
                     options.add(countryDao.findOneByCode(countryCodeList.get(rand)).getCapital().getName());
                 }
                 break;
             case CoutryByCapital:
                 for(int i = 0;i<3;i++){
                     rand = (int) ((Math.random() * countryCodeList.size()) );
+                    while(countryCodeList.get(rand).equals(except.getCode())){
+                        rand = (int) ((Math.random() * countryCodeList.size()) );
+                    }
                     options.add(countryDao.findOneByCode(countryCodeList.get(rand)).getName());
                 }
                 break;
