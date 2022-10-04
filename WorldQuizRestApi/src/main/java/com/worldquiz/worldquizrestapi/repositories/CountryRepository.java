@@ -15,4 +15,7 @@ public interface CountryRepository extends JpaRepository<Country, Integer> {
 
     @Query(value = "select code from country where capital is not null", nativeQuery = true)
     List<String> findAllCodes();
+
+    @Query(value = "SELECT name from country where Population = (select max(Population) FROM world.country where name in (\"Poland\",\"France\"));", nativeQuery = true)
+    Country findCountryWithLargestPopultion();
 }

@@ -1,5 +1,6 @@
 package com.worldquiz.worldquizrestapi;
 
+import com.worldquiz.worldquizrestapi.models.Country;
 import com.worldquiz.worldquizrestapi.repositories.CityRepository;
 import com.worldquiz.worldquizrestapi.repositories.CountryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +42,20 @@ public class QuizManager {
                     }else {
                         responses.add(0);
                     }
+                    break;
+                case CountryWithLargestPopulaton:
+                    answer =  quiz.getAnswer();
+                    question = quiz.getQuestion();
+                    List<String> options = quiz.getOptions();
+                    Country country = countryRepository.findCountryWithLargestPopultion();
+                    String aa = "";
+//                    if(cityRepository.findOneByName(capitalName).getCountry().getName().equals(answer)){
+//                        responses.add(1);
+//                    }else {
+//                        responses.add(0);
+//                    }
+                    break;
+
             }
         }
 
