@@ -54,7 +54,7 @@ public class QuizGenerator {
                 options = getOptions(quizType,options);
                 break;
             case CountryWithLargestPopulaton:
-                question = "Which of the following countries has the largest population";
+                question = "Which of the following countries has the largest population?";
                 options = getOptions(quizType,options);
                 break;
         }

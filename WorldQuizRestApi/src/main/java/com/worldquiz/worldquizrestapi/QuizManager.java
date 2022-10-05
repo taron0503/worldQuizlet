@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Component
@@ -45,17 +46,14 @@ public class QuizManager {
                     break;
                 case CountryWithLargestPopulaton:
                     answer =  quiz.getAnswer();
-                    question = quiz.getQuestion();
                     List<String> options = quiz.getOptions();
-                    Country country = countryRepository.findCountryWithLargestPopultion();
-                    String aa = "";
-//                    if(cityRepository.findOneByName(capitalName).getCountry().getName().equals(answer)){
-//                        responses.add(1);
-//                    }else {
-//                        responses.add(0);
-//                    }
+                    String country = countryRepository.findCountryWithLargestPopultion(options);
+                    if(country.equals(answer)){
+                        responses.add(1);
+                    }else {
+                        responses.add(0);
+                    }
                     break;
-
             }
         }
 
