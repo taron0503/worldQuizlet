@@ -1,13 +1,11 @@
 package com.worldquiz.worldquizrestapi;
 
-import com.worldquiz.worldquizrestapi.models.Country;
 import com.worldquiz.worldquizrestapi.repositories.CityRepository;
 import com.worldquiz.worldquizrestapi.repositories.CountryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Component
@@ -44,7 +42,7 @@ public class QuizManager {
                         responses.add(0);
                     }
                     break;
-                case CountryWithLargestPopulaton:
+                case CountryWithLargestPopulation:
                     answer =  quiz.getAnswer();
                     List<String> options = quiz.getOptions();
                     String country = countryRepository.findCountryWithLargestPopultion(options);

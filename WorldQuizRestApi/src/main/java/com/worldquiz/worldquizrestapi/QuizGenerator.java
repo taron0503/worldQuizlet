@@ -6,9 +6,10 @@ import com.worldquiz.worldquizrestapi.repositories.CityRepository;
 import com.worldquiz.worldquizrestapi.repositories.CountryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.yaml.snakeyaml.util.ArrayUtils;
 
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Component
 public class QuizGenerator {
@@ -23,6 +24,7 @@ public class QuizGenerator {
     private int optionsCount=4;
 
     public List<Quiz> getQuizzes(int count){
+        countryCodeList = countryRepository.findAllCodes();
         List<Quiz> quizzes = new ArrayList<>();
         QuizType[] values =  QuizType.values();
         int rand;
@@ -34,10 +36,8 @@ public class QuizGenerator {
         return quizzes;
     }
 
-    public Quiz generateQuiz(QuizType quizType){
-        Quiz quiz=null;
+    private Quiz generateQuiz(QuizType quizType){
         String question = "";
-        countryCodeList = countryRepository.findAllCodes();
         List<String> options = new ArrayList<>();
         switch (quizType){
             case CapitalByCoutry:
@@ -49,26 +49,22 @@ public class QuizGenerator {
             case  CoutryByCapital:
                 City capital = getRandomCapital();
                 question = "Which country's capital is " + capital.getName() + "?";
-//                options = getOptions(quizType,capital.getCountry());
                 options.add(capital.getCountry().getName());
                 options = getOptions(quizType,options);
                 break;
-            case CountryWithLargestPopulaton:
+            case CountryWithLargestPopulation:
                 question = "Which of the following countries has the largest population?";
                 options = getOptions(quizType,options);
                 break;
         }
         Collections.shuffle(options);
-        quiz = new Quiz(quizType,question,options);
-        return quiz;
+        return new Quiz(quizType,question,options);
     }
 
-    List<String> getOptions(QuizType quizType, List<String> options){
+    private List<String> getOptions(QuizType quizType, List<String> options){
         int rand;
         while(options.size()<optionsCount) {
-            rand = (int) ((Math.random() * countryCodeList.size()));
-            String countryCode = countryCodeList.get(rand);
-            Country country = countryRepository.findByCode(countryCode);
+            Country country = getRandomCountry();
 
             switch (quizType) {
                 case CapitalByCoutry:
@@ -77,7 +73,7 @@ public class QuizGenerator {
                         }
                     break;
                 case CoutryByCapital:
-                case CountryWithLargestPopulaton:
+                case CountryWithLargestPopulation:
                     if (!options.contains(country.getName())) {
                             options.add(country.getName());
                         }
@@ -91,14 +87,33 @@ public class QuizGenerator {
         return options;
     }
 
-    Country getRandomCountry(){
-        int rand = (int) ((Math.random() * countryCodeList.size()) );
-        Country country = countryRepository.findByCode(countryCodeList.get(rand));
+    private Country getRandomCountry(){
+        int rand;
+        Country country;
+        boolean badCountryName;
+        boolean badCapitalName;
+        do{
+            rand = (int) ((Math.random() * countryCodeList.size()) );
+            country = countryRepository.findByCode(countryCodeList.get(rand));;
+            badCountryName = Pattern.compile("[^a-zA-Z -]").matcher(country.getName()).find();
+            badCapitalName = Pattern.compile("[^a-zA-Z -]").matcher(country.getCapital().getName()).find();
+        }while (badCountryName || badCapitalName);
+
         return country;
     }
 
-    City getRandomCapital(){
-        int rand = (int) ((Math.random() * countryCodeList.size()) );
-        return countryRepository.findOneByCode(countryCodeList.get(rand)).getCapital();
+    private City getRandomCapital(){
+        int rand;
+        City capital;
+        boolean badCaitalName;
+        boolean badCountryName;
+        do{
+            rand = (int) ((Math.random() * countryCodeList.size()) );
+            capital = countryRepository.findOneByCode(countryCodeList.get(rand)).getCapital();
+            badCaitalName = Pattern.compile("[^a-zA-Z -]").matcher(capital.getName()).find();
+            badCountryName = Pattern.compile("[^a-zA-Z -]").matcher(capital.getCountry().getName()).find();
+        }while (badCaitalName || badCountryName);
+
+        return capital;
     }
 }

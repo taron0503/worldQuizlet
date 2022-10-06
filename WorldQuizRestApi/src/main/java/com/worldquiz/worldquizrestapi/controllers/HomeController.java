@@ -29,7 +29,7 @@ public class HomeController {
 
     public List<Quiz> getQuestion(){
 //        return quizGenerator.generateQuiz(QuizType.CoutryByCapital);
-        return quizGenerator.getQuizzes(4);
+        return quizGenerator.getQuizzes(80);
     }
 
     @PostMapping("/checkAnswers")
