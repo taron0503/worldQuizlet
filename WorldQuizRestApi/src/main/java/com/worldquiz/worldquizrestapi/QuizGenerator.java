@@ -5,6 +5,7 @@ import com.worldquiz.worldquizrestapi.models.Country;
 import com.worldquiz.worldquizrestapi.repositories.CityRepository;
 import com.worldquiz.worldquizrestapi.repositories.CountryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
@@ -13,18 +14,23 @@ import java.util.regex.Pattern;
 
 @Component
 public class QuizGenerator {
-    @Autowired
     CountryRepository countryRepository;
 
     @Autowired
     CityRepository cityRepository;
 
     List<String> countryCodeList;
+    @Value("${quiz.optionsCount}")
+    private int optionsCount;
 
-    private int optionsCount=4;
+    @Autowired
+    public QuizGenerator(CountryRepository countryRepository) {
+        this.countryRepository = countryRepository;
+        countryCodeList = countryRepository.findAllCodes();
+
+    }
 
     public List<Quiz> getQuizzes(int count){
-        countryCodeList = countryRepository.findAllCodes();
         List<Quiz> quizzes = new ArrayList<>();
         QuizType[] values =  QuizType.values();
         int rand;
@@ -82,8 +88,6 @@ public class QuizGenerator {
 
             }
         }
-
-
         return options;
     }
 
